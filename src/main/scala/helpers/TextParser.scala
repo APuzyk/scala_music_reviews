@@ -16,19 +16,19 @@ class TextParser {
     o
   }
 
-  def createDict (reviews: Array[Review]): Map[Int, String] = {
+  def createDict (reviews: Array[Review]): Map[String, Int] = {
     // Get words for dict
     var words: ArrayBuffer[String] = ArrayBuffer()
-    var o: Map[Int, String] = Map()
+    var o: Map[String, Int] = Map()
 
     for (r <- reviews) {
       r.get_cleansedContent.foreach(words += _)
     }
     words = words.distinct
 
-    var i: Int = 0
+    var i: Int = 1
     for (w <- words) {
-      o += (i -> w)
+      o += (w -> i)
       i += 1
     }
 

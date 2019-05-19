@@ -2,6 +2,8 @@ package reviews
 
 import helpers.TextParser
 
+import scala.collection.mutable.ArrayBuffer
+
 class Review(val reviewid: Int,
              val artist: String,
              val content: String,
@@ -36,7 +38,7 @@ class Review(val reviewid: Int,
   private val _pub_year: Int = pub_year
   private val _year: Int = year
   private var _cleansedContent: Array[String] = Array()
-
+  private var _contentVec: Array[Int] = Array()
   def get_reviewid: Int = {
     _reviewid
   }
@@ -108,5 +110,15 @@ class Review(val reviewid: Int,
 
   def get_cleansedContent: Array[String] = {
     _cleansedContent
+  }
+
+  def createContentVec (wordIndexes: Map[String, Int]) {
+    var o: ArrayBuffer[Int] = ArrayBuffer()
+    for (w <- _cleansedContent) {
+      o += wordIndexes.getOrElse(w, 0)
+    }
+
+    _contentVec = o.toArray
+    _cleansedContent = Array() //we don't need it anymore
   }
 }
