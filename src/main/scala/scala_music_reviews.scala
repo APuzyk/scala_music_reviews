@@ -1,17 +1,11 @@
 import review_factory.ReviewFactory
 import helpers.TextParser
+import reviews.ReviewCatalog
 
 object ScalaMusicReviews{
   def main(args: Array[String]): Unit = {
-    val rf: ReviewFactory = new ReviewFactory("blah")
-    val tp: TextParser = new TextParser
-
-    val a = rf.get_bulk_review
-    for(e <- a) e.cleanseAndParseContent
-    val word_dictionary = tp.createDict(a)
-
-    println(word_dictionary)
-    println(a(0).get_content)
-    a(0).get_cleansedContent.foreach(println(_))
+    val rc: ReviewCatalog = new ReviewCatalog(review_location = "/home/apuzyk/Projects/music_reviews/data/database.sqlite",
+                                              input_type = "sqllite",
+                                              output_location = "/home/apuzyk/Projects/music_review/data")
   }
 }

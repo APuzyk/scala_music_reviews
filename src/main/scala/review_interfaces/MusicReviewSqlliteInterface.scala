@@ -2,7 +2,7 @@ package review_interfaces
 
 import java.sql.{Connection, DriverManager, ResultSet}
 
-class MusicReviewSqlliteInterface(var review_location: String = "/home/apuzyk/Projects/music_reviews/data/database.sqlite") {
+class MusicReviewSqlliteInterface(var review_location: String) {
 
   private val _url: String = "jdbc:sqlite:".concat(review_location)
 
