@@ -18,6 +18,7 @@ class ReviewCatalog (val review_location: String,
   private var _word_dictionary: Map[String, Int] = _tp.createDict(reviews)
 
   def write_wordDictionary: Unit = {
+    println("\nwriting word dict to file...")
     val file = new File(output_location.concat("/word_dict.txt"))
     file.delete()
 
@@ -28,10 +29,10 @@ class ReviewCatalog (val review_location: String,
     }
     bw.write(o)
     bw.close()
+    println("Completed writing word dict\n")
   }
 
   def createTextToDictMap: Unit = {
     for (r <- reviews) r.createContentVec(_word_dictionary)
-
   }
 }
