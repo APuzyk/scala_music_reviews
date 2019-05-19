@@ -2,7 +2,8 @@ package review_interfaces
 
 import java.sql.{Connection, DriverManager, ResultSet}
 
-class MusicReviewSqlliteInterface(var review_location: String) {
+class MusicReviewSqlliteInterface(var input_type: String, var review_location: String) {
+  if (input_type != "sqllite") print("Inputs other than sqllite not currently supported")
 
   private val _url: String = "jdbc:sqlite:".concat(review_location)
 

@@ -6,10 +6,8 @@ import scala.collection.mutable.ArrayBuffer
 
 class ReviewFactory(val input_type: String, val review_location: String) {
 
-  private val _input_type: String = input_type
-
   def get_bulk_review: Array[Review] = {
-    val music_review_interface = new MusicReviewSqlliteInterface(review_location)
+    val music_review_interface = new MusicReviewSqlliteInterface(input_type, review_location)
 
     val genres: Map[Int, String] = music_review_interface.getGenres
     val artists: Map[Int, String] = music_review_interface.getArtists
