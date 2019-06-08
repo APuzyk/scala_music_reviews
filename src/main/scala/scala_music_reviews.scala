@@ -9,3 +9,5 @@ object ScalaMusicReviews{
     rc.write_wordDictionary
   }
 }
+
+
