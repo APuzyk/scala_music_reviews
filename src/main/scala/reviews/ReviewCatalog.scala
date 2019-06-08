@@ -17,6 +17,8 @@ class ReviewCatalog (val review_location: String,
   private val reviews: Array[Review] = _rf.get_bulk_review
   private val _output_location = output_location
   private val _uuid = randomUUID().toString
+  val sql_interface = new MusicReviewSqlliteInterface("sqllite", _output_location)
+  sql_interface.writeRunId(_uuid)
 
   for(r <- reviews) r.cleanseAndParseContent
 
@@ -39,5 +41,10 @@ class ReviewCatalog (val review_location: String,
     val sql_interface = new MusicReviewSqlliteInterface("sqllite", _output_location)
     sql_interface.writeReviewData(reviews, _uuid)
     println("Completed writing reviews\n")
+  }
+
+  def completeRun: Unit = {
+    val sql_interface = new MusicReviewSqlliteInterface("sqllite", _output_location)
+    sql_interface.completeRun(_uuid)
   }
 }

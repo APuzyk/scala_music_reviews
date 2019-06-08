@@ -10,6 +10,45 @@ class MusicReviewSqlliteInterface(var input_type: String, var review_location: S
 
   private val _url: String = "jdbc:sqlite:".concat(review_location)
 
+  def writeRunId (uuid: String): Boolean = {
+
+    Class.forName("org.sqlite.JDBC") //idk why I need to do this
+    var _connection: Connection = null
+    _connection = DriverManager.getConnection(_url)
+    val statement = _connection.createStatement()
+    //sql lite auto defines rowid
+    val create_statement = "CREATE TABLE IF NOT EXISTS runs (\n" +
+      "	start_ts BIGINT,\n" +
+      " end_ts BIGINT,\n" +
+      " uuid VARCHAR,\n" +
+      " run_type VARCHAR\n" +
+      ");"
+    val o = statement.execute(create_statement)
+    val insert_sql = "INSERT INTO runs(start_ts, end_ts, uuid, run_type) VALUES(?, ?, ?, ?)"
+    val prepared_statement = _connection.prepareStatement(insert_sql)
+    val timestamp: Long = System.currentTimeMillis / 1000
+    prepared_statement.setLong(1, timestamp)
+    prepared_statement.setLong(2, 0)
+    prepared_statement.setString(3, uuid)
+    prepared_statement.setString(4, "review_prep")
+    prepared_statement.executeUpdate()
+
+    o
+  }
+
+  def completeRun (uuid: String): Unit = {
+    Class.forName("org.sqlite.JDBC") //idk why I need to do this
+    var _connection: Connection = null
+    _connection = DriverManager.getConnection(_url)
+    val update_sql = "UPDATE runs SET end_ts = ? WHERE uuid = ?"
+
+    val prepared_statement = _connection.prepareStatement(update_sql)
+    val timestamp: Long = System.currentTimeMillis / 1000
+    prepared_statement.setLong(1, timestamp)
+    prepared_statement.setString(2, uuid)
+    prepared_statement.executeUpdate()
+  }
+
   def getIntStringMapFromResultSet (resultSet: ResultSet, to_get_name: String) : Map[Int, String] = {
     var o: Map[Int, String] = Map()
     while (resultSet.next()) {

@@ -8,6 +8,7 @@ object ScalaMusicReviews{
     rc.createTextToDictMap
     rc.write_wordDictionary
     rc.write_reviews
+    rc.completeRun
   }
 }
 
