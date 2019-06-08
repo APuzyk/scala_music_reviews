@@ -121,4 +121,8 @@ class Review(val reviewid: Int,
     _contentVec = o.toArray
     _cleansedContent = Array() //we don't need it anymore
   }
+
+  def get_content_vec_as_string: String = {
+    _contentVec.mkString("~")
+  }
 }
